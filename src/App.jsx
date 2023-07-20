@@ -6,6 +6,7 @@ import { createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import Search from "./components/search";
 import Home from "./Home";
+import RootContainer from "./components/RootContainer/RootContainer";
 import "./global.css"
 import { BiSolidSearchAlt2 } from 'react-icons/bi'
 
@@ -21,20 +22,7 @@ function ProfilePage() {
   return <h1>Profile</h1>
 }
 
-function RootContainer(props) {
-  return (
-    <div style={{
-      width: '100%',
-      maxWidth: '1120px',
-      margin: '0 auto',
-      backgroundColor: 'rgb(129, 200, 239)',
-      height: '100%',
-      display: 'grid',
-      gridTemplateRows: '9% 91%'}}>
-      {props.children}
-    </div >
-  )
-}
+
 
 function RootLayout() {
   return (
