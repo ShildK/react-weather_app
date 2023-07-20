@@ -1,54 +1,63 @@
-import { useState } from "react";
+import { Route } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { createRoutesFromElements } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import Search from "./components/search";
+import Home from "./Home";
+import "./global.css"
+import { BiSolidSearchAlt2 } from 'react-icons/bi'
+
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element={<RootLayout />}>
+    <Route path=":cityName" element={<Home />} />
+    <Route path="search" element={<Search />} />
+    <Route path="profile" element={<ProfilePage />} />
+  </Route>
+))
+
+function ProfilePage() {
+  return <h1>Profile</h1>
+}
+
+function RootContainer(props) {
+  return (
+    <div style={{
+      width: '100%',
+      maxWidth: '1120px',
+      margin: '0 auto',
+      backgroundColor: 'rgb(129, 200, 239)',
+      height: '100%',
+      display: 'grid',
+      gridTemplateRows: '9% 91%'}}>
+      {props.children}
+    </div >
+  )
+}
+
+function RootLayout() {
+  return (
+    <div style={{ height: "100lvh" }}>
+
+      <RootContainer>
+        <div style={{ display: 'flex', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>
+          <Link to="/">Home</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/search"><BiSolidSearchAlt2 /></Link>
+        </div>
+        <Outlet />
+      </RootContainer>
+    </div>
+  )
+
+
+}
 
 function App() {
-  const [cityName, setCityName] = useState('')
-  const [weather, setWeather] = useState({ temp: undefined, feels_like: undefined, wind: undefined})
-
-  const cityNameChangeHedler = (e) => {
-    setCityName(e.target.value)
-  }
-
-  const handlerClick = async () => {
-    let weatherNew = await getWeahter(cityName)
-    console.log(weatherNew);
-    setWeather({temp: weatherNew.main.temp, feels_like: weatherNew.main.feels_like, wind: weatherNew.wind.speed })
-  }
-
-  const url = process.env.REACT_APP_API_URL
-  const apiKey = process.env.REACT_APP_API_KEY
-
-  const getCoordinates = async (cityName) => {
-    const req = await fetch(`${url}/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`);
-    const response = await req.json()
-    const data = response[0]
-    return {
-      lat: data?.lat,
-      lon: data?.lon
-    }
-  }
-
-  const fetchWeather = async (lat, lon) => {
-    if (lat !== undefined && lon !== undefined) {
-      const req = await fetch(`${url}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
-      const response = await req.json();
-      return response
-    }
-    return {}
-  }
-
-  const getWeahter = async (cityName) => {
-    const coordinates = await getCoordinates(cityName)
-    const weather = await fetchWeather(coordinates.lat, coordinates.lon)
-    return weather
-  }
-
   return (
     <>
-      <input onChange={cityNameChangeHedler} type="text" />
-      <button onClick={handlerClick}>Find</button>
-      <div>
-        {weather.temp !== undefined ? <div> <h1>{cityName}</h1> <h2>{weather.feels_like}</h2> <h2>{weather.temp}</h2> <h2>{weather.wind}</h2> </div> : ''}
-      </div>
+      <RouterProvider router={router} />
     </>
   )
 }
