@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Search from "./components/Search";
-import Home from "./Home";
+import Search from "./Search";
+import Home from "./components/Home/Home";
 import RootContainer from "./components/RootContainer/RootContainer";
 import "./global.css"
 import { BiSolidSearchAlt2 } from 'react-icons/bi'

@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Container from "./components/Container/Container"
+import Container from "../Container/Container"
 import { IoIosThunderstorm } from "react-icons/io"
 import { BsCloudDrizzleFill } from "react-icons/bs"
 import { BsCloudRainHeavyFill } from "react-icons/bs"
 import { GiSnowing } from "react-icons/gi"
 import { BsFillCloudFog2Fill } from "react-icons/bs"
-import { BsCloudSunFill } from "react-icons/bs"
-
+import { PiCloudSunLight } from "react-icons/pi"
+import WeatherInformation from "../WeatherInformation/WeatherInformation";
+import styles from "./Home.module.css"
 
 export default function Home() {
     const { cityName } = useParams()
@@ -20,10 +21,13 @@ export default function Home() {
         const req = await fetch(`${url}/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`);
         const response = await req.json()
         const data = response[0]
-        return {
-            lat: data?.lat,
-            lon: data?.lon
+        if (req !== undefined) {
+            return {
+                lat: data?.lat,
+                lon: data?.lon
+            }
         }
+        return undefined
     }
 
     const fetchWeather = async (lat, lon) => {
@@ -37,20 +41,26 @@ export default function Home() {
 
     const getWeahter = async (cityName) => {
         const coordinates = await getCoordinates(cityName)
-        const weather = await fetchWeather(coordinates.lat, coordinates.lon)
-        setWeather({ id: weather.weather[0].id, temp: weather.main.temp, feels_like: weather.main.feels_like, wind: weather.wind.speed })
-        return weather
+        if (coordinates !== undefined) {
+            const weather = await fetchWeather(coordinates.lat, coordinates.lon)
+            console.log(weather)
+            if (weather.main) {
+                setWeather({ id: weather.weather[0].id, temp: weather.main.temp, feels_like: weather.main.feels_like, wind: weather.wind.speed })
+                return weather
+            }
+        }
+        setWeather([])
     }
-    
+
     const icons = {
         '2': <IoIosThunderstorm />,
         '3': <BsCloudDrizzleFill />,
         '5': <BsCloudRainHeavyFill />,
         '6': <GiSnowing />,
         '7': <BsFillCloudFog2Fill />,
-        '8': <BsCloudSunFill />
+        '8': <PiCloudSunLight />
     }
-    
+
     useEffect(() => {
         if (cityName) {
             getWeahter(cityName)
@@ -59,16 +69,19 @@ export default function Home() {
 
     return (
         <Container>
-            {cityName ?
-                (weather.temp !== undefined &&
-                    <div>
-                        <h1>{cityName}</h1>
-                        <div>{icons[weather.id.toString()[0]]}</div>
-                        <h2>{weather.feels_like}</h2>
-                        <h2>{weather.temp}</h2>
-                        <h2>{weather.wind}</h2>
-                    </div>)
-                : <h1>Вы не указали город</h1>}
+            <div className={styles.weather__information}>
+                {cityName ?
+                    (weather !== [] && weather.temp !== undefined ?
+                        <WeatherInformation
+                            key={weather.id}
+                            icon={icons[weather.id.toString()[0]]}
+                            cityName={cityName}
+                            temp={weather.temp}
+                            feelsLike={weather.feels_like}
+                            wind={weather.wind} />
+                        : <div><h1 className={styles.window__message__text}>Неверное название города</h1></div>)
+                    : <div><h1 className={styles.window__message__text}>Вы не указали город</h1></div>}
+            </div>
         </Container>
     )
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Container from "./Container/Container";
+import Container from "./components/Container/Container";
 
 export default function Search() {
     const [cityName, setCityName] = useState('')
