@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Search from "./components/search";
+import Search from "./components/Search";
 import Home from "./Home";
 import RootContainer from "./components/RootContainer/RootContainer";
 import "./global.css"
@@ -12,6 +12,7 @@ import { BiSolidSearchAlt2 } from 'react-icons/bi'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
+    <Route index element={<Home />} />
     <Route path=":cityName" element={<Home />} />
     <Route path="search" element={<Search />} />
     <Route path="profile" element={<ProfilePage />} />
@@ -21,7 +22,6 @@ const router = createBrowserRouter(createRoutesFromElements(
 function ProfilePage() {
   return <h1>Profile</h1>
 }
-
 
 
 function RootLayout() {
@@ -38,8 +38,6 @@ function RootLayout() {
       </RootContainer>
     </div>
   )
-
-
 }
 
 function App() {

@@ -1,6 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Container from "./components/Container/Container"
+import { IoIosThunderstorm } from "react-icons/io"
+import { BsCloudDrizzleFill } from "react-icons/bs"
+import { BsCloudRainHeavyFill } from "react-icons/bs"
+import { GiSnowing } from "react-icons/gi"
+import { BsFillCloudFog2Fill } from "react-icons/bs"
+import { BsCloudSunFill } from "react-icons/bs"
+
 
 export default function Home() {
     const { cityName } = useParams()
@@ -31,19 +38,37 @@ export default function Home() {
     const getWeahter = async (cityName) => {
         const coordinates = await getCoordinates(cityName)
         const weather = await fetchWeather(coordinates.lat, coordinates.lon)
-        setWeather({ temp: weather.main.temp, feels_like: weather.main.feels_like, wind: weather.wind.speed })
+        setWeather({ id: weather.weather[0].id, temp: weather.main.temp, feels_like: weather.main.feels_like, wind: weather.wind.speed })
         return weather
     }
-
+    
+    const icons = {
+        '2': <IoIosThunderstorm />,
+        '3': <BsCloudDrizzleFill />,
+        '5': <BsCloudRainHeavyFill />,
+        '6': <GiSnowing />,
+        '7': <BsFillCloudFog2Fill />,
+        '8': <BsCloudSunFill />
+    }
+    
     useEffect(() => {
-        getWeahter(cityName)
-    })
+        if (cityName) {
+            getWeahter(cityName)
+        }
+    }, [])
 
     return (
         <Container>
-            
-                {weather.temp !== undefined ? <div> <h1>{cityName}</h1> <h2>{weather.feels_like}</h2> <h2>{weather.temp}</h2> <h2>{weather.wind}</h2> </div> : ''}
-            
+            {cityName ?
+                (weather.temp !== undefined &&
+                    <div>
+                        <h1>{cityName}</h1>
+                        <div>{icons[weather.id.toString()[0]]}</div>
+                        <h2>{weather.feels_like}</h2>
+                        <h2>{weather.temp}</h2>
+                        <h2>{weather.wind}</h2>
+                    </div>)
+                : <h1>Вы не указали город</h1>}
         </Container>
     )
 }
