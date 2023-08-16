@@ -1,0 +1,21 @@
+.burger__menu {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.burger__menu__button svg{
+    height: 30px;
+    width: 30px;
+}
+
+.menu__close {
+    display: none;
+}
+.menu__open {
+    display: flex;
+    display: inline-block;
+}
+.menu__open a:nth-of-type(1) {
+    margin: 0 20px;
+}

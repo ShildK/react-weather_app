@@ -1,13 +1,18 @@
+import "./global.css"
 import { Route } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Search from "./Search";
+import { useState } from "react";
+
+import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
 import RootContainer from "./components/RootContainer/RootContainer";
-import "./global.css"
+import Navbar from "./components/Navbar/Navbar";
+import Profile from "./components/Profile/Profile";
+
 import { BiSolidSearchAlt2 } from 'react-icons/bi'
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -15,23 +20,20 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route index element={<Home />} />
     <Route path=":cityName" element={<Home />} />
     <Route path="search" element={<Search />} />
-    <Route path="profile" element={<ProfilePage />} />
+    <Route path="profile" element={<Profile />} />
   </Route>
 ))
 
-function ProfilePage() {
-  return <h1>Profile</h1>
-}
-
-
 function RootLayout() {
+  const [isMenuOpen, getMenuState] = useState(false)
+
   return (
-    <div style={{ height: "100lvh" }}>
+    <div style={{maxWidth: "100%", height: "100lvh" }}>
 
       <RootContainer>
-        <div style={{ display: 'flex', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>
-          <Link to="/">Home</Link>
-          <Link to="/profile">Profile</Link>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>
+
+          <Navbar isMenuOpen={isMenuOpen} getMenuState={getMenuState}/>
           <Link to="/search"><BiSolidSearchAlt2 /></Link>
         </div>
         <Outlet />
