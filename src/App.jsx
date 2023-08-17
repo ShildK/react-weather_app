@@ -33,7 +33,7 @@ function RootLayout() {
       <RootContainer>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>
 
-          <Navbar isMenuOpen={isMenuOpen} getMenuState={getMenuState}/>
+          <Navbar key={isMenuOpen} isMenuOpen={isMenuOpen} getMenuState={getMenuState}/>
           <Link to="/search"><BiSolidSearchAlt2 /></Link>
         </div>
         <Outlet />

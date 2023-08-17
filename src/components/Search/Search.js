@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { json } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Container from "../Container/Container";
 import styles from "./Search.module.css"
@@ -13,13 +12,12 @@ export default function Search() {
     }
 
 
-
     const onClick = () => {
         navigate(`/${cityName}`)
         
-        let cityNamesInLocalStorage = JSON.parse(localStorage.getItem('cityNames')) || []
-        cityNamesInLocalStorage.push(cityName)
-        localStorage.setItem('cityNames', JSON.stringify(cityNamesInLocalStorage))
+        let citiesNamesInLocalStorage = JSON.parse(localStorage.getItem('listOfCities')) || []
+        citiesNamesInLocalStorage.push(cityName)
+        localStorage.setItem('listOfCities', JSON.stringify(citiesNamesInLocalStorage))
     }
 
     return (

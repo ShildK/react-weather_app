@@ -13,16 +13,21 @@
 
     font-size: 18px;
 
-    border: 1px solid rgb(63, 115, 180);
+    border: none;
+    border-radius: 5px;
     box-shadow: 5px 5px 5px rgba(124, 160, 205, 0.712);
+    background-color: rgb(220, 243, 255);
 }
 .search__button{
     width: 20%;
     padding: 5px 0;
     
     font-size: 18px;
+    font-weight: 500;
     color: rgb(38, 82, 136);
 
-    border: 1px solid rgb(63, 115, 180);
+    border: none;
+    border-radius: 5px;
     box-shadow: 5px 5px 5px rgba(124, 160, 205, 0.712);
+    background-color: rgb(220, 243, 255);
 }

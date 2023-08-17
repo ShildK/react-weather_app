@@ -8,8 +8,9 @@ body {
 }
 
 a {
+    cursor: pointer;
     text-decoration: none;
-    color: rgb(67, 82, 138);
+    color: rgb(23, 69, 107);
 }
 
 button {
