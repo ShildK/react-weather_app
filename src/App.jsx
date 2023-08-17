@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import { useState } from "react";
 
 import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
@@ -25,15 +24,12 @@ const router = createBrowserRouter(createRoutesFromElements(
 ))
 
 function RootLayout() {
-  const [isMenuOpen, getMenuState] = useState(false)
-
   return (
     <div style={{maxWidth: "100%", height: "100lvh" }}>
-
       <RootContainer>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>
 
-          <Navbar key={isMenuOpen} isMenuOpen={isMenuOpen} getMenuState={getMenuState}/>
+          <Navbar />
           <Link to="/search"><BiSolidSearchAlt2 /></Link>
         </div>
         <Outlet />
