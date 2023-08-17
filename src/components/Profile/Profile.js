@@ -17,7 +17,7 @@ function Profile() {
 
     return (
         <div className={styles.profile__page}>
-            {citiesHistory !== [] && citiesNamesInLocalStorage !== null ? (
+            {citiesHistory.length > 0 ? (
                 <div className={styles.profile__page__list}>
                     <h2 className={styles.profile__page__title}>
                         Список городов, которые Вы искали ранее

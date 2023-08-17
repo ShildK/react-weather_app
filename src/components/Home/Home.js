@@ -27,21 +27,21 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             if (cityName) {
-                const w = await getWeahter(cityName)
-                setWeather({ id: w.weather[0].id, temp: w.main.temp, feels_like: w.main.feels_like, wind: w.wind.speed })
+                const currentWeather = await getWeahter(cityName)
+                setWeather({ id: currentWeather.weather[0].id, temp: currentWeather.main.temp, feels_like: currentWeather.main.feels_like, wind: currentWeather.wind.speed })
                 return
             }
-            return setWeather([])
+            setWeather({})
+            return 
         }
         fetchData()
-
     }, [])
 
     return (
         <Container>
             <div className={styles.weather__information}>
                 {cityName ?
-                    (weather !== [] && weather.temp !== undefined ?
+                    (weather.temp !== undefined ?
                         <WeatherInformation
                             key={weather.id}
                             icon={icons[weather.id.toString()[0]]}
