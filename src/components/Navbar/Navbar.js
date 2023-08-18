@@ -8,10 +8,10 @@ import { VscChromeClose } from 'react-icons/vsc'
 import { BiSolidSearchAlt2 } from 'react-icons/bi'
 
 function Navbar() {
-    const [isMenuOpen, getMenuState] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const hedlerChange = () => {
-        getMenuState(!isMenuOpen)
+        setIsMenuOpen(!isMenuOpen)
     }
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', padding: '30px', backgroundColor: 'rgb(238, 239, 239)' }}>

@@ -11,11 +11,13 @@ export default function Search() {
         setCityName(e.target.value)
     }
 
-
     const onClick = () => {
         navigate(`/${cityName}`)
         
         let citiesNamesInLocalStorage = JSON.parse(localStorage.getItem('listOfCities')) || []
+        if(citiesNamesInLocalStorage.includes(cityName)){
+            return
+        }
         citiesNamesInLocalStorage.push(cityName)
         localStorage.setItem('listOfCities', JSON.stringify(citiesNamesInLocalStorage))
     }
@@ -23,7 +25,7 @@ export default function Search() {
     return (
         <Container>
             <div className={styles.search}>
-                <input onChange={hedlerChange} type="text" className={styles.search__input} />
+                <input onChange={hedlerChange} value={cityName} type="text" className={styles.search__input} />
                 <button onClick={onClick} className={styles.search__button}>Find</button>
             </div>
         </Container>

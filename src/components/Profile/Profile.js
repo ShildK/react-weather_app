@@ -28,7 +28,7 @@ function Profile() {
                                 to={`/${city}`}
                                 className={styles.profile__page__link}
                             >
-                                {city}
+                                {city.toUpperCase()}
                             </Link>
                         );
                     })}

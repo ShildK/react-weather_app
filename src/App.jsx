@@ -1,22 +1,17 @@
 import "./global.css"
 import { Route, RouterProvider, Outlet, createRoutesFromElements, createBrowserRouter } from "react-router-dom";
-import { } from "react-router-dom";
-import { } from "react-router-dom";
-import { } from "react-router-dom";
-import { } from "react-router-dom";
-import { } from "react-router-dom";
 
 import Search from "./components/Search/Search";
 import Home from "./components/Home/Home";
 import RootContainer from "./components/RootContainer/RootContainer";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-
+import { fetchData } from "./lib/home";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
     <Route index element={<Home />} />
-    <Route path=":cityName" element={<Home />} />
+    <Route path=":cityName" element={<Home />} loader={fetchData} />
     <Route path="search" element={<Search />} />
     <Route path="profile" element={<Profile />} />
   </Route>
