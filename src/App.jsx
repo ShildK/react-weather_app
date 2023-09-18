@@ -12,7 +12,7 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<RootLayout />}>
     <Route index element={<Home />} />
     <Route path=":cityName" element={<Home />} loader={fetchData} />
-    <Route path="search" element={<Search />} />
+    <Route path="search" element={<Search />} loader={fetchData} />
     <Route path="profile" element={<Profile />} />
   </Route>
 ))

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "../Container/Container";
 import styles from "./Search.module.css"
+import { getWeahter } from "../../lib/home";
 
 export default function Search() {
+    
     const [cityName, setCityName] = useState('')
     const navigate = useNavigate()
 
@@ -11,13 +13,18 @@ export default function Search() {
         setCityName(e.target.value)
     }
 
-    const onClick = () => {
+    const onClick = async() => {
         navigate(`/${cityName}`)
-        
+        const weather = await getWeahter(`/${cityName}`)
+
         let citiesNamesInLocalStorage = JSON.parse(localStorage.getItem('listOfCities')) || []
         if(citiesNamesInLocalStorage.includes(cityName)){
             return
         }
+        if(weather.main===undefined){
+            return
+        }
+        
         citiesNamesInLocalStorage.push(cityName)
         localStorage.setItem('listOfCities', JSON.stringify(citiesNamesInLocalStorage))
     }
